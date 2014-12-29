@@ -22,14 +22,13 @@ while True:
 	mac = ""
 	val = -200
 	returnedList = blescan.parse_events(sock, 10)
-	print "----------"
 	for beacon in returnedList:
 		#print beacon
 		result = beacon.split(",")
 		if int(result[5]) > val :
 			val = result[5]
 			mac = result[0]
-	if (mac == "7e:60:6f:3b:d9:47"):
+	if (mac == "52:48:d9:dd:b1:84"):
 		led_a(True)
 		print("IPAD:" + result[5])
 	elif (mac == "d0:39:72:c3:a2:d6"):
@@ -37,5 +36,5 @@ while True:
 		print("BLE MINI:" + result[5])
 	else:
 		print("Unknown " + result[0])
-	time.sleep(0.5)
+	time.sleep(0.2)
 
