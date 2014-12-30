@@ -7,12 +7,12 @@ import bluetooth._bluetooth as bluez
 dev_id = 0
 
 try:
-	sock = bluez.hci_open_dev(dev_id)
-	print "ble thread started"
+    sock = bluez.hci_open_dev(dev_id)
+    print "ble thread started"
 
 except:
-	print "error accessing bluetooth device..."
-    	sys.exit(1)
+    print "error accessing bluetooth device..."
+        sys.exit(1)
 
 blescan.hci_le_set_scan_parameters(sock)
 blescan.hci_enable_le_scan(sock)
@@ -27,12 +27,12 @@ client.connect("localhost", port=1883, keepalive=60)
 client.loop_start()
 
 while True:
-	returnedList = blescan.parse_events(sock, 1)
-	for beacon in returnedList:
-		result = beacon.split(",")
-		if result[1].startswith("64657203194"):
-			client.publish("/uuid/" + result[0], result[5])
-			#print beacon, int(time.time())
-			#print result[0], result[5]
+    returnedList = blescan.parse_events(sock, 1)
+    for beacon in returnedList:
+        result = beacon.split(",")
+        if result[1].startswith("64657203194"):
+            client.publish("/uuid/" + result[0], result[5])
+            #print beacon, int(time.time())
+            #print result[0], result[5]
 
 
