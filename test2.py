@@ -1,24 +1,22 @@
-import blescan
 import sys
-import bluetooth._bluetooth as bluez
-import datetime
+from proximity import *
 
-dev_id = 0
-
-try:
-	sock = bluez.hci_open_dev(dev_id)
-	print "ble thread started"
-
-except:
-	print "error accessing bluetooth device..."
-    	sys.exit(1)
-
-blescan.hci_le_set_scan_parameters(sock)
-blescan.hci_enable_le_scan(sock)
-
+scanner = Scanner(loops=3)
 while True:
-	returnedList = blescan.parse_events(sock, 1)
-	for beacon in returnedList:
-		print beacon
+    val = -sys.maxint - 1
+    mac = ""
+    for beacon in scanner.scan():
+        print beacon
+        result = beacon.split(",")
+        if int(result[5]) > val :
+            val = int(result[5])
+            mac = result[0]
+    if (mac == "fe:95:5c:da:63:9d"):
+        print("GREEN:(fe:95:5c:da:63:9d):", val)
+    elif (mac == "d7:53:ea:b7:22:6a"):
+        print("BLUE:(d7:53:ea:b7:22:6a):", val)
+    else:
+        print("Unknown " + mac)
+    print("========================")
 
-
+        
