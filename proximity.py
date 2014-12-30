@@ -1,15 +1,33 @@
-import sys, operator
+#
+# by taka wang
+#
+
+import sys, operator, threading
 from collections import deque
 from numpy import average
 
+# require by Scanner
 import blescan
 import bluetooth._bluetooth as bluez
 
 class Calculator():
-    def __init__(self, steps=5):
+    def __init__(self, steps=5, timer=0):
         self.steps = steps
         self.uuid = {}
         self.rssi = {}
+        if timer > 0:
+            self.__setInterval(self.sanitize, timer)
+
+    def __setInterval(self, func, sec):
+        def func_wrapper():
+            self.__setInterval(func, sec)
+            func()
+        t = threading.Timer(sec, func_wrapper)
+        t.start()
+        return t
+
+    def sanitize(self):
+        print("TODO: clean missing beacons")
 
     def add(self, id, value):
         if (id not in self.uuid):
@@ -21,6 +39,7 @@ class Calculator():
     
     def nearest(self):
         for id, values in self.uuid.iteritems():
+            # no matter which uuid satisfy this condition, calculate the max 
             if (len(values) == self.steps):
                 max_id = max(self.uuid.iteritems(), key=operator.itemgetter(1))[0]
                 return max_id, self.rssi[max_id]
@@ -39,15 +58,15 @@ class Calculator():
         print(self.uuids())
 
 class Scanner():
-    def __init__(self, dev_id=0, loops=1):
-        self.dev_id = dev_id
+    def __init__(self, deviceId=0, loops=1):
+        self.deviceId = deviceId
         self.loops = loops
         try:
-            self.sock = bluez.hci_open_dev(self.dev_id)
+            self.sock = bluez.hci_open_dev(self.deviceId)
             blescan.hci_le_set_scan_parameters(self.sock)
             blescan.hci_enable_le_scan(self.sock)
         except Exception, e:
-            print "error accessing bluetooth device..."
+            print e
             sys.exit(1)   
 
     def scan(self):
@@ -59,7 +78,7 @@ class Scanner():
                 print beacon
 
 if __name__ == '__main__':
-    c = Calculator()
+    c = Calculator(timer=1)
     c.test()
     s = Scanner(loops=3)
     s.test()
