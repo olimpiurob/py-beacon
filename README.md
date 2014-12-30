@@ -1,9 +1,9 @@
-bbb-beacon-led
+py-beacon
 ==============
-	sudo apt-get install bluez python-bluez
-	#pip install Adafruit_BBIO
+	sudo apt-get install bluez python-bluez python-numpy
+	pip install paho.mqtt.client
 
-sudo python test.py
+
 
 Format: MAC Address, UDID, Major Number, Minor Number, TX Power at 1m, RSSI
 
