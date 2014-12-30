@@ -1,20 +1,19 @@
 #
-# by taka wang
+# by Taka Wang
 #
 
 import sys, operator, threading
 from collections import deque
 from numpy import average
-
-# require by Scanner
+# require by Scanner class
 import blescan
 import bluetooth._bluetooth as bluez
 
 class Calculator():
-    def __init__(self, steps=5, timer=0):
-        self.steps = steps
+    def __init__(self, qCapacity = 5, timer = 0):
         self.uuid = {}
         self.rssi = {}
+        self.capacity = qCapacity # capacity for each queue
         if timer > 0:
             self.__setInterval(self.sanitize, timer)
 
@@ -31,18 +30,20 @@ class Calculator():
 
     def add(self, id, value):
         if (id not in self.uuid):
-            self.uuid[id] = deque(maxlen=self.steps)
-            self.rssi[id] = -sys.maxint - 1
+            self.uuid[id] = deque(maxlen = self.capacity) # size limited queue
+            self.rssi[id] = -sys.maxint - 1 # init with -inf
+
         self.uuid[id].append(value)
-        if (len(self.uuid[id]) == self.steps):
-            self.rssi[id] = average(self.uuid[id], weights=range(1,self.steps+1,1))
+        if (len(self.uuid[id]) == self.capacity):
+            # weighted moving average calculation via numpy's average function
+            self.rssi[id] = average(self.uuid[id], weights = range(1, self.capacity + 1, 1))
     
     def nearest(self):
-        for id, values in self.uuid.iteritems():
+        for id, container in self.uuid.iteritems():
             # no matter which uuid satisfy this condition, calculate the max 
-            if (len(values) == self.steps):
-                max_id = max(self.uuid.iteritems(), key=operator.itemgetter(1))[0]
-                return max_id, self.rssi[max_id]
+            if (len(container) == self.capacity):
+                max_uuid = max(self.uuid.iteritems(), key = operator.itemgetter(1))[0]
+                return max_uuid, self.rssi[max_uuid]
         return None, None
 
     def uuids(self):
@@ -58,7 +59,7 @@ class Calculator():
         print(self.uuids())
 
 class Scanner():
-    def __init__(self, deviceId=0, loops=1):
+    def __init__(self, deviceId = 0, loops = 1):
         self.deviceId = deviceId
         self.loops = loops
         try:
@@ -66,8 +67,7 @@ class Scanner():
             blescan.hci_le_set_scan_parameters(self.sock)
             blescan.hci_enable_le_scan(self.sock)
         except Exception, e:
-            print e
-            sys.exit(1)   
+            print e   
 
     def scan(self):
         return blescan.parse_events(self.sock, self.loops)
@@ -78,15 +78,15 @@ class Scanner():
                 print beacon
 
 if __name__ == '__main__':
-    c = Calculator(timer=1)
+    c = Calculator(timer = 1)
     c.test()
-    s = Scanner(loops=3)
+    s = Scanner(loops = 3)
     s.test()
 
 '''
 from proximity import *
 c = Calculator()
 c.test()
-s = Scanner(loops=3)
+s = Scanner(loops = 3)
 s.test()    
 ''' 
