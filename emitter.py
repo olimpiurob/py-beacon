@@ -1,3 +1,7 @@
+#
+# by Taka Wang
+#
+
 import paho.mqtt.client as mqtt
 import time, ConfigParser
 from proximity import *

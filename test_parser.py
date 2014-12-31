@@ -1,3 +1,7 @@
+#
+# by Taka Wang
+#
+
 import ConfigParser
  
 config = ConfigParser.ConfigParser()

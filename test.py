@@ -1,3 +1,7 @@
+#
+# by Taka Wang
+#
+
 from proximity import *
 
 scanner = Scanner(loops=3)
