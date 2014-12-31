@@ -1,6 +1,8 @@
 import paho.mqtt.client as mqtt
 from proximity import *
 
+DEBUG = True
+
 def onConnect(client, userdata, rc):
     print("Connected to broker: " + str(rc))
 
@@ -23,6 +25,7 @@ def startScan(mqttclnt, filter=""):
                 fields = beacon.split(",")
                 if fields[1].startswith(filter):
                     mqttclnt.publish("/ble/id/" + fields[0], fields[5])
+                    if DEBUG: print(fields[0], fields[5])
 
 if __name__ == '__main__':
     clnt = initMQTT()

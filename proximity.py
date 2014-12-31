@@ -9,7 +9,6 @@ from numpy import average
 import blescan
 import bluetooth._bluetooth as bluez
 
-
 class Calculator():
     def __init__(self, queueCapacity = 5, chkTimer = 3, threshold = 10):
         self.qRssi     = {}             # key:id, value:rssi queue
@@ -58,7 +57,8 @@ class Calculator():
             # at least one beacon satisfy this condition, calculate the max 
             if (len(container) == self.capacity):
                 nearest_uid = max(self.qRssi.iteritems(), key = operator.itemgetter(1))[0]
-                return nearest_uid, self.aRssi[nearest_uid]
+                if (self.aRssi[nearest_uid] > -200):
+                    return nearest_uid, round(self.aRssi[nearest_uid],1)
         return None, None
 
     def beacons(self):
