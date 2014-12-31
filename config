@@ -1,0 +1,16 @@
+[MQTT]
+url       = localhost
+port      = 1883
+keepalive = 60
+
+[Calculator]
+queueCapacity = 5
+chkTimer      = 3
+threshold     = 10
+
+[Scanner]
+deviceId      = 0
+loops         = 1
+filter        = ""
+topic_id      = /ble/id/
+nearest_id    = /ble/nearest/

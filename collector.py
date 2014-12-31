@@ -1,3 +1,4 @@
+import ConfigParser
 import paho.mqtt.client as mqtt
 from proximity import *
 
@@ -17,16 +18,28 @@ def initMQTT(url = "localhost", port = 1883, keepalive = 60):
         print(e)
         return None
 
-def startScan(mqttclnt, filter=""):
+def startScan(mqttclnt, filter="", topic="/ble/id/"):
     if mqttclnt:
         scanner = Scanner()
         while True:
             for beacon in scanner.scan():
                 fields = beacon.split(",")
                 if fields[1].startswith(filter):
-                    mqttclnt.publish("/ble/id/" + fields[0], fields[5])
+                    mqttclnt.publish(topic + fields[0], fields[5])
                     if DEBUG: print(fields[0], fields[5])
 
+def init():
+    ret = {}
+    config = ConfigParser.ConfigParser()
+    config.read("config")
+    ret["url"]       = config.get('MQTT', 'url')
+    ret["port"]      = int(config.get('MQTT', 'port'))
+    ret["keepalive"] = int(config.get('MQTT', 'keepalive'))
+    ret["filter"]    = config.get('Scanner', 'filter')
+    ret["topic_id"]  = config.get('Scanner', 'topic_id')
+    return ret
+
 if __name__ == '__main__':
-    clnt = initMQTT()
-    startScan(clnt)
+    conf = init()
+    clnt = initMQTT(conf["url"], conf["port"], conf["keepalive"])
+    startScan(clnt, conf["filter"], conf["topic_id"])
