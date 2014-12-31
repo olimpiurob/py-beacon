@@ -2,7 +2,7 @@
 ble beacon scanner in python.
 
 ## Message Flow
-![alt text](https://github.com/taka-wang/py-beacon/blob/master/flow.png "Logo Title Text 1")
+![alt text](https://github.com/taka-wang/py-beacon/blob/34705ac28654d8b2f5a9edf296ea152fa04c183f/flow.png "Logo Title Text 1")
 
 ## Scripts
 
