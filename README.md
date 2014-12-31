@@ -10,7 +10,6 @@ Scripts
 - emitter.py   => scan beacon and publish via mqtt 
 
 
-
 Installation
 ----
 	sudo apt-get install bluez python-bluez python-numpy

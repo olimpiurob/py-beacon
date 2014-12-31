@@ -61,7 +61,7 @@ class Calculator():
                 return nearest_uid, self.aRssi[nearest_uid]
         return None, None
 
-    def uids(self):
+    def beacons(self):
         return self.qRssi.keys()
 
     def test(self):
@@ -71,7 +71,7 @@ class Calculator():
             self.add("id-2", j)
         ret, val = self.nearest()
         print(ret, val)
-        print(self.uids())
+        print(self.beacons())
 
 class Scanner():
     def __init__(self, deviceId = 0, loops = 1):
