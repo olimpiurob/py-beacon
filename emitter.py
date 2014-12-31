@@ -14,16 +14,15 @@ def initMQTT(url = "localhost", port = 1883, keepalive = 60):
     except Exception, e:
         print(e)
         return None
-    
 
-def startScan(mqttclnt, prefix=""):
+def startScan(mqttclnt, filter=""):
     if mqttclnt:
         scanner = Scanner()
         while True:
             for beacon in scanner.scan():
                 fields = beacon.split(",")
-                if fields[1].startswith(prefix):
-                    mqttclnt.publish("/uuid/" + fields[0], fields[5])
+                if fields[1].startswith(filter):
+                    mqttclnt.publish("/ble/id/" + fields[0], fields[5])
 
 if __name__ == '__main__':
     clnt = initMQTT()

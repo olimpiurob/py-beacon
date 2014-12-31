@@ -2,22 +2,26 @@
 # by Taka Wang
 #
 
-import sys, operator, threading
+import sys, operator, time, threading
 from collections import deque
 from numpy import average
 # require by Scanner class
 import blescan
 import bluetooth._bluetooth as bluez
 
+
 class Calculator():
-    def __init__(self, qCapacity = 5, timer = 0):
-        self.uid  = {}
-        self.rssi = {}
-        self.capacity = qCapacity # capacity for each queue
-        if timer > 0:
-            self.__setInterval(self.sanitize, timer)
+    def __init__(self, queueCapacity = 5, chkTimer = 3, threshold = 10):
+        self.qRssi     = {}             # key:id, value:rssi queue
+        self.aRssi     = {}             # key:id, value:average rssi
+        self.ts        = {}             # key:id, value:expire timestamp
+        self.capacity  = queueCapacity  # queue capacity for moving average
+        self.threshold = threshold      # missing beacon threshold in seconds
+        if chkTimer > 0:
+            self.__setInterval(self.sanitize, chkTimer)
 
     def __setInterval(self, func, sec):
+        """Thread based setInterval function - (not safe)"""
         def func_wrapper():
             self.__setInterval(func, sec)
             func()
@@ -26,28 +30,39 @@ class Calculator():
         return t
 
     def sanitize(self):
-        print("TODO: clean missing beacons")
+        """Remove expire beacons"""
+        now = int(time.time())
+        for id in self.ts.keys():
+            if self.ts[id] < now:
+                del self.aRssi[id]
+                del self.qRssi[id]
+                del self.ts[id]
+                print("clean uid: ", id)
 
     def add(self, id, value):
-        if (id not in self.uid):
-            self.uid[id]  = deque(maxlen = self.capacity) # size limited queue
-            self.rssi[id] = -sys.maxint - 1 # init with -inf
+        """Add new rssi for calculation."""
+        if (id not in self.qRssi):
+            self.qRssi[id]  = deque(maxlen = self.capacity)     # size limited queue
+            self.aRssi[id] = -sys.maxint - 1                   # init with -inf
+            self.ts[id]   = int(time.time() + self.threshold) # init with current timestamp
 
-        self.uid[id].append(value)
-        if (len(self.uid[id]) == self.capacity):
+        self.qRssi[id].append(value)
+        self.ts[id] = int(time.time() + self.threshold)       # update expire timestamp
+        if (len(self.qRssi[id]) == self.capacity):
             # weighted moving average calculation via numpy's average function
-            self.rssi[id] = average(self.uid[id], weights = range(1, self.capacity + 1, 1))
+            self.aRssi[id] = average(self.qRssi[id], weights = range(1, self.capacity + 1, 1))
     
     def nearest(self):
-        for id, container in self.uid.iteritems():
-            # no matter which uid satisfy this condition, calculate the max 
+        """Find max average rssi beacon"""
+        for id, container in self.qRssi.iteritems():
+            # at least one beacon satisfy this condition, calculate the max 
             if (len(container) == self.capacity):
-                max_uid = max(self.uid.iteritems(), key = operator.itemgetter(1))[0]
-                return max_uid, self.rssi[max_uid]
+                nearest_uid = max(self.qRssi.iteritems(), key = operator.itemgetter(1))[0]
+                return nearest_uid, self.aRssi[nearest_uid]
         return None, None
 
     def uids(self):
-        return self.uid.keys()
+        return self.qRssi.keys()
 
     def test(self):
         for i in xrange(1, 10):
@@ -78,7 +93,7 @@ class Scanner():
                 print beacon
 
 if __name__ == '__main__':
-    c = Calculator(timer = 1)
+    c = Calculator(chkTimer = 1, threshold = 5)
     c.test()
     s = Scanner(loops = 3)
     s.test()
