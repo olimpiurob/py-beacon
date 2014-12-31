@@ -5,9 +5,9 @@ ble beacon scanner in python.
 
 Scripts
 ----
-blescan.py   - bluez libs
-proximity.py - main module
-emitter.py   - scan beacon and publish via mqtt 
+- blescan.py   => bluez libs
+- proximity.py => main module
+- emitter.py   => scan beacon and publish via mqtt 
 
 
 
