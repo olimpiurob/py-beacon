@@ -2,12 +2,7 @@
 ble beacon scanner in python.
 
 ## Message Flow
-
-beacon -> [collector] ==pub==> broker ==sub==> [emitter] ==pub==> broker
-
-                                 ||                                ||
-                                 ~~~> rssi              nearest <~~~~
-
+![alt text](https://github.com/taka-wang/py-beacon/blob/master/flow.png "Logo Title Text 1")
 
 ## Scripts
 
