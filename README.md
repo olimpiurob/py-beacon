@@ -11,6 +11,11 @@ ble beacon scanner in python.
 - collector.py => scan beacon and publish via mqtt 
 - emitter.py   => calculate nearest beacon and publish via mqtt
 
+## Test
+    sudo python test.py
+    sudo python collector.py
+    python emitter.py
+
 ## Installation
 	sudo apt-get install bluez python-bluez python-numpy
     sudo pip install -r requirements.txt
