@@ -1,6 +1,12 @@
 # py-beacon
 ble beacon scanner in python.
 
+=========================================================================
+beacon -> [collector] ==pub==> broker ==sub==> [emitter] ==pub==> broker
+                                 |                                 |
+                                 --> rssi                nearest <--
+=========================================================================
+
 ## Scripts
 
 #### Modules
