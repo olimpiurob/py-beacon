@@ -3,11 +3,11 @@ ble beacon scanner in python.
 
 ## Scripts
 
-### Modules
+#### Modules
 - blescan.py   => bluez libs
 - proximity.py => main module
 
-### Executable
+#### Executable
 - collector.py => scan beacon and publish via mqtt 
 - emitter.py   => calculate nearest beacon and publish via mqtt
 
