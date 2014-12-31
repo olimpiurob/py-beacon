@@ -42,9 +42,9 @@ class Calculator():
     def add(self, id, value):
         """Add new rssi for calculation."""
         if (id not in self.qRssi):
-            self.qRssi[id]  = deque(maxlen = self.capacity)     # size limited queue
+            self.qRssi[id] = deque(maxlen = self.capacity)     # size limited queue
             self.aRssi[id] = -sys.maxint - 1                   # init with -inf
-            self.ts[id]   = int(time.time() + self.threshold) # init with current timestamp
+            self.ts[id]    = int(time.time() + self.threshold) # init with current timestamp
 
         self.qRssi[id].append(value)
         self.ts[id] = int(time.time() + self.threshold)       # update expire timestamp
