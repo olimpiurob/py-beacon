@@ -7,7 +7,7 @@ Scripts
 ----
 - blescan.py   => bluez libs
 - proximity.py => main module
-- emitter.py   => scan beacon and publish via mqtt 
+- collector.py   => scan beacon and publish via mqtt 
 
 
 Installation
