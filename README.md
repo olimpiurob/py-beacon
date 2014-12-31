@@ -17,7 +17,6 @@ ble beacon scanner in python.
 
 ## Misc
 - [setup environment](https://gist.github.com/taka-wang/29433180cc8affcde3b2)
-
 - [install mosquitto 1.4 on raspberry pi](https://gist.github.com/taka-wang/1c47cde3e4c9c2d83156)
 
 ## MIT License
