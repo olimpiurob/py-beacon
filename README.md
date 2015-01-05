@@ -15,6 +15,7 @@ ble beacon scanner in python.
 - emitter.py   => calculate nearest beacon and publish via mqtt
 
 ## Test
+    mosquitto -c /etc/mosquitto/mosquitto.conf -d
     sudo python test.py
     sudo python collector.py
     python emitter.py
