@@ -62,6 +62,7 @@ class Calculator():
         return None, None
 
     def beacons(self):
+        """List visible beacons"""
         return self.qRssi.keys()
 
     def test(self):

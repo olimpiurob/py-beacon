@@ -11,13 +11,18 @@ calculator = 0
 conf  = 0
 
 def onConnect(client, userdata, rc):
+    """MQTT onConnect handler"""
     print("Connected to broker: " + str(rc))
     client.subscribe(conf["topic_id"] + "#")
 
 def onMessage(client, userdata, msg):
+    """MQTT subscribe handler
+    Push new beacon info to calculator for proximity calculation
+    """
     calculator.add(msg.topic[conf["topic_id_len"]:], int(msg.payload))
 
 def initMQTT(url = "localhost", port = 1883, keepalive = 60):
+    """Init MQTT connection"""
     client = mqtt.Client()
     client.on_connect = onConnect
     client.on_message = onMessage
@@ -30,6 +35,7 @@ def initMQTT(url = "localhost", port = 1883, keepalive = 60):
         return None
 
 def init():
+    """Read config file"""
     ret = {}
     config = ConfigParser.ConfigParser()
     config.read("config")
@@ -52,6 +58,6 @@ if __name__ == '__main__':
         time.sleep(3)
         ret, val = calculator.nearest()
         if ret:
-            clnt.publish(conf["nearest_id"], '{"id":"' + ret + '","val":'+ str(val) + '}')
+            clnt.publish(conf["nearest_id"], '{"id":"%s","val":"%s"}' % (ret, str(val)))
             if DEBUG: print(ret, val)
         

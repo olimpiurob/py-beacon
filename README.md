@@ -20,6 +20,7 @@ BLE beacon scanner in python.
 
 ## Test
     mosquitto -c /etc/mosquitto/mosquitto.conf -d # start broker
+
     sudo python test.py
     sudo python collector.py # scan BLE 
     python emitter.py # calculate nearest beacon

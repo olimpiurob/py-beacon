@@ -9,9 +9,11 @@ from proximity import *
 DEBUG = True
 
 def onConnect(client, userdata, rc):
+    """MQTT onConnect handler"""
     print("Connected to broker: " + str(rc))
 
 def initMQTT(url = "localhost", port = 1883, keepalive = 60):
+    """Init MQTT connection"""
     client = mqtt.Client()
     client.on_connect = onConnect
     try:
@@ -23,6 +25,7 @@ def initMQTT(url = "localhost", port = 1883, keepalive = 60):
         return None
 
 def startScan(mqttclnt, filter="", topic="/ble/id/"):
+    """Scan BLE beacon and publish to MQTT broker"""
     if mqttclnt:
         scanner = Scanner()
         while True:
@@ -33,6 +36,7 @@ def startScan(mqttclnt, filter="", topic="/ble/id/"):
                     if DEBUG: print(fields[0], fields[5])
 
 def init():
+    """Read config file"""
     ret = {}
     config = ConfigParser.ConfigParser()
     config.read("config")
