@@ -31,7 +31,7 @@ BLE beacon scanner in python.
 
 ## Miscs
 - [Setup Environment on BBB](https://gist.github.com/taka-wang/29433180cc8affcde3b2)
-- [install mosquitto 1.4 on raspberry pi](https://gist.github.com/taka-wang/1c47cde3e4c9c2d83156)
+- [Install mosquitto 1.4 on raspberry pi](https://gist.github.com/taka-wang/1c47cde3e4c9c2d83156)
 
 ## MIT License
 blescan.py source from [here](https://github.com/switchdoclabs/iBeacon-Scanner-.git)
