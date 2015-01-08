@@ -4,7 +4,7 @@ port      = 1883
 keepalive = 60
 
 [Calculator]
-queueCapacity = 5
+queueCapacity = 2
 chkTimer      = 3
 threshold     = 10
 
