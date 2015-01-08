@@ -17,3 +17,7 @@ nearest_id    = /ble/nearest/
 
 [Emitter]
 sleepInterval = 3
+debug         = 0
+
+[Collector]
+debug         = 0

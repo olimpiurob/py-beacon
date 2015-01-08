@@ -40,6 +40,8 @@ def init():
     ret = {}
     config = ConfigParser.ConfigParser()
     config.read("config")
+    global DEBUG
+    DEBUG = True if int(config.get('Collector', 'debug')) == 1 else False
     ret["url"]       = config.get('MQTT', 'url')
     ret["port"]      = int(config.get('MQTT', 'port'))
     ret["keepalive"] = int(config.get('MQTT', 'keepalive'))
