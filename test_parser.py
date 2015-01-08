@@ -20,3 +20,5 @@ print(config.get('Scanner', 'loops'))
 print(config.get('Scanner', 'filter'))
 print(config.get('Scanner', 'topic_id'))
 print(config.get('Scanner', 'nearest_id'))
+
+print(config.get('Emitter', 'sleepInterval'))

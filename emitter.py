@@ -48,6 +48,7 @@ def init():
     ret["topic_id"]      = config.get('Scanner', 'topic_id')
     ret["nearest_id"]    = config.get('Scanner', 'nearest_id')
     ret["topic_id_len"]  = len(ret["topic_id"])
+    ret["sleepInterval"] = int(config.get('Emitter', 'sleepInterval'))
     return ret
 
 if __name__ == '__main__':
@@ -55,7 +56,7 @@ if __name__ == '__main__':
     calculator = Calculator(conf["queueCapacity"], conf["chkTimer"], conf["threshold"])
     clnt = initMQTT(conf["url"], conf["port"], conf["keepalive"])
     while True:
-        time.sleep(3)
+        time.sleep(conf["sleepInterval"])
         ret, val = calculator.nearest()
         if ret:
             clnt.publish(conf["nearest_id"], '{"id":"%s","val":"%s"}' % (ret, str(val)))

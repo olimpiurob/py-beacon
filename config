@@ -14,3 +14,6 @@ loops         = 1
 filter        = ""
 topic_id      = /ble/id/
 nearest_id    = /ble/nearest/
+
+[Emitter]
+sleepInterval = 3
