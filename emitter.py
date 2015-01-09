@@ -62,6 +62,6 @@ if __name__ == '__main__':
         time.sleep(conf["sleepInterval"])
         ret, val = calculator.nearest()
         if ret:
-            clnt.publish(conf["nearest_id"], str('{"id":"%s","val":"%s"}' % (ret, str(val))))
-            if DEBUG: print(str(ret), val)
+            clnt.publish(conf["nearest_id"], str('{"id":"%s","val":"%s"}' % (ret, val)))
+            if DEBUG: print(ret, val)
         
