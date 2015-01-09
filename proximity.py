@@ -58,7 +58,7 @@ class Calculator():
             if (len(container) == self.capacity):
                 nearest_uid = max(self.qRssi.iteritems(), key = operator.itemgetter(1))[0]
                 if (self.aRssi[nearest_uid] > -200):
-                    return nearest_uid, round(self.aRssi[nearest_uid],1)
+                    return str(nearest_uid), round(self.aRssi[nearest_uid],1)
         return None, None
 
     def beacons(self):
