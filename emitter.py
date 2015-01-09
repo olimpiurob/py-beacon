@@ -63,5 +63,5 @@ if __name__ == '__main__':
         ret, val = calculator.nearest()
         if ret:
             clnt.publish(conf["nearest_id"], str('{"id":"%s","val":"%s"}' % (ret, str(val))))
-            if DEBUG: print(ret, val)
+            if DEBUG: print(str(ret), val)
         
