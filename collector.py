@@ -24,7 +24,7 @@ def initMQTT(url = "localhost", port = 1883, keepalive = 60):
         print(e)
         return None
 
-def startScan(mqttclnt, filter="", topic="/ble/id/"):
+def startScan(mqttclnt, filter="", topic="/ble/rssi/"):
     """Scan BLE beacon and publish to MQTT broker"""
     if mqttclnt:
         scanner = Scanner()
@@ -32,7 +32,7 @@ def startScan(mqttclnt, filter="", topic="/ble/id/"):
             for beacon in scanner.scan():
                 fields = beacon.split(",")
                 if fields[1].startswith(filter):
-                    mqttclnt.publish(topic + fields[0], fields[5])
+                    mqttclnt.publish(topic, '{"id":"%s","val":"%s"}' % (fields[0], fields[5]))
                     if DEBUG: print(fields[0], fields[5])
 
 def init():

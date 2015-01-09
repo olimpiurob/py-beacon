@@ -3,7 +3,7 @@
 #
 
 import paho.mqtt.client as mqtt
-import time, ConfigParser
+import time, ConfigParser, json
 from proximity import *
 
 DEBUG = True
@@ -19,7 +19,8 @@ def onMessage(client, userdata, msg):
     """MQTT subscribe handler
     Push new beacon info to calculator for proximity calculation
     """
-    calculator.add(msg.topic[conf["topic_id_len"]:], int(msg.payload))
+    obj = json.loads(msg.payload) # decode json string
+    calculator.add(obj["id"], int(obj["val"]))
 
 def initMQTT(url = "localhost", port = 1883, keepalive = 60):
     """Init MQTT connection"""
@@ -61,6 +62,6 @@ if __name__ == '__main__':
         time.sleep(conf["sleepInterval"])
         ret, val = calculator.nearest()
         if ret:
-            clnt.publish(conf["nearest_id"], '{"id":"%s","val":"%s"}' % (ret, str(val)))
+            clnt.publish(conf["nearest_id"], str('{"id":"%s","val":"%s"}' % (ret, str(val))))
             if DEBUG: print(ret, val)
         

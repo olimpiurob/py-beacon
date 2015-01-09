@@ -12,7 +12,7 @@ threshold     = 10
 deviceId      = 0
 loops         = 1
 filter        = ""
-topic_id      = /ble/id/
+topic_id      = /ble/rssi/
 nearest_id    = /ble/nearest/
 
 [Emitter]
