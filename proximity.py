@@ -36,7 +36,7 @@ class Calculator():
                 del self.aRssi[id]
                 del self.qRssi[id]
                 del self.ts[id]
-                print("clean uid: ", id)
+                print("clean uid: ", str(id))
 
     def add(self, id, value):
         """Add new rssi for calculation."""
