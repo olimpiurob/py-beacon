@@ -12,8 +12,8 @@ threshold     = 10
 deviceId      = 0
 loops         = 1
 filter        = ""
-topic_id      = /ble/rssi/
-nearest_id    = /ble/nearest/
+topic_id      = /lab3/ble/rssi/
+nearest_id    = /lab3/ble/nearest/
 
 [Emitter]
 sleepInterval = 3
