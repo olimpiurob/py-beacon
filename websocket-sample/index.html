@@ -60,8 +60,6 @@
 
     function onConnectionLost(response) {
         setTimeout(MQTTconnect, reconnectTimeout);
-        $('#status').val("connection lost: " + responseObject.errorMessage + ". Reconnecting");
-
     };
 
     function onMessageArrived(message) {
