@@ -34,7 +34,6 @@
             cleanSession: cleansession,
             onSuccess: onConnect,
             onFailure: function (message) {
-                $('#status').val("Connection failed: " + message.errorMessage + "Retrying");
                 setTimeout(MQTTconnect, reconnectTimeout);
             }
         };
@@ -51,11 +50,7 @@
     }
 
     function onConnect() {
-        $('#status').val('Connected to ' + host + ':' + port);
-        // Connection succeeded; subscribe to our topic
         mqtt.subscribe(topic, {qos: 0});
-        //mqtt.subscribe("/ble/nearest/", {qos: 0});
-        $('#topic').val(topic);
     }
 
     function onConnectionLost(response) {
