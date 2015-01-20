@@ -24,7 +24,7 @@
 
     function MQTTconnect() {
         mqtt = new Paho.MQTT.Client(
-                        host,
+                        window.location.hostname,
                         port,
                         "web_" + parseInt(Math.random() * 100,
                         10));
@@ -46,7 +46,7 @@
             options.userName = username;
             options.password = password;
         }
-        console.log("Host="+ host + ", port=" + port + " TLS = " + useTLS + " username=" + username + " password=" + password);
+        console.log("Host="+ window.location.hostname + ", port=" + port + " TLS = " + useTLS + " username=" + username + " password=" + password);
         mqtt.connect(options);
     }
 
