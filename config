@@ -1,7 +1,14 @@
 [MQTT]
-url       = localhost
-port      = 1883
-keepalive = 60
+url         = localhost
+port        = 1883
+keepalive   = 60
+client_id   = ble-scanner
+username    = username
+password    = password
+certificate = /path/to/server/ca.crt
+client_key  = /path/to/client.key
+client_cert = /path/to/client.crt
+protocol    = 3.1.1
 
 [Calculator]
 queueCapacity = 2
