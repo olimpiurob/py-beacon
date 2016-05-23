@@ -30,7 +30,7 @@ def initMQTT(url="localhost", port=1883, keepalive=60, client_id=None,
              client_cert=None, mqtt_protocol="3.1.1"):
     """Init MQTT connection"""
     proto = mqtt.MQTTv311
-    if protocol == "3.1":
+    if mqtt_protocol == "3.1":
         proto = mqtt.MQTTv31
 
     if not client_id:
@@ -86,7 +86,10 @@ if __name__ == '__main__':
     calculator = Calculator(conf["queueCapacity"],
                             conf["chkTimer"],
                             conf["threshold"])
-    clnt = initMQTT(conf["url"], conf["port"], conf["keepalive"])
+    clnt = initMQTT(conf["url"], conf["port"], conf["keepalive"],
+                    conf["client_id"], conf["username"], conf["password"],
+                    conf["certificate"], conf["client_key"],
+                    conf["client_cert"], conf["mqtt_protocol"])
     while True:
         time.sleep(conf["sleepInterval"])
         ret, val = calculator.nearest()
