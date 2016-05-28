@@ -34,7 +34,6 @@ def initMQTT(url="localhost", port=1883, keepalive=60, client_id=None,
         client.tls_set(certificate, certfile=client_cert, keyfile=client_key)
 
     client.on_connect = onConnect
-    client.on_message = onMessage
     try:
         client.connect(url, port, keepalive)
         client.loop_start()
