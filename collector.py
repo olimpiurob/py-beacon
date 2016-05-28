@@ -70,9 +70,12 @@ def init():
     ret["client_id"]     = config.get('MQTT', 'client_id')
     ret["username"]      = config.get('MQTT', 'username')
     ret["password"]      = config.get('MQTT', 'password')
-    ret["certificate"]   = config.get('MQTT', 'certificate')
-    ret["client_key"]    = config.get('MQTT', 'client_key')
-    ret["client_cert"]   = config.get('MQTT', 'client_cert')
+    certificate = config.get('MQTT', 'certificate')
+    client_cert = config.get('MQTT', 'client_cert')
+    client_key = config.get('MQTT', 'client_key')
+    ret["certificate"]   = certificate if certificate else None
+    ret["client_key"]    = client_key if client_key else None
+    ret["client_cert"]   = client_cert if client_cert else None
     ret["mqtt_protocol"] = config.get('MQTT', 'protocol')
     ret["filter"]        = config.get('Scanner', 'filter')
     ret["topic_id"]      = config.get('Scanner', 'topic_id')
